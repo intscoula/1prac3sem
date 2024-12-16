@@ -10,7 +10,7 @@
 namespace fs = std::filesystem;
 using json = nlohmann::json;
 
-void loadSchema(DatabaseManager& dbManager, const std::string& configPath) {
+void loadSchema(DatabaseManager& dbManager, const std::string& configPath) {  //загружает схему базы данных из файла JSON
     std::ifstream file(configPath);
     if (!file.is_open()) {
         throw std::runtime_error("Ошибка открытия schema.json файла");
@@ -36,7 +36,7 @@ void loadSchema(DatabaseManager& dbManager, const std::string& configPath) {
     }
 }
 
-void createDirectoriesAndFiles(const DatabaseManager& dbManager) {
+void createDirectoriesAndFiles(const DatabaseManager& dbManager) {  //создает директории и файлы для каждой таблицы в базе данных
     if (!fs::exists(dbManager.schemaName)) { // если директории нет, то мы ее создадаем
         fs::create_directory(dbManager.schemaName); 
     }
@@ -57,7 +57,7 @@ void createDirectoriesAndFiles(const DatabaseManager& dbManager) {
     }
 }
 
-void createCSVFile(const std::string& tableDir, DBtable& table, int tuplesLimit) {
+void createCSVFile(const std::string& tableDir, DBtable& table, int tuplesLimit) {   //создает CSV файл для таблицы
     int fileIndex = 1;
     fs::path csvPath = fs::path(tableDir) / (table.tableName + "_" + std::to_string(fileIndex) + ".csv");
     
@@ -80,7 +80,7 @@ void createCSVFile(const std::string& tableDir, DBtable& table, int tuplesLimit)
     csvFile.close(); // Закрываем файл
 }
 
-void createPrimaryKeyFile(const std::string& tableDir, const std::string& tableName) {
+void createPrimaryKeyFile(const std::string& tableDir, const std::string& tableName) { //создает файл для первичного ключа
     std::ofstream pkFile(fs::path(tableDir) / (tableName + "_pk_sequence.txt"));
     if (!pkFile.is_open()) {
         std::cerr << "Error while making primary key for " << tableName << std::endl;
@@ -91,7 +91,7 @@ void createPrimaryKeyFile(const std::string& tableDir, const std::string& tableN
     pkFile.close();
 }
 
-void createLockFile(const std::string& tableDir, const std::string& tableName) {
+void createLockFile(const std::string& tableDir, const std::string& tableName) {  //создает файл для блокировки
     std::ofstream lockFile(fs::path(tableDir) / (tableName + "_lock.txt"));
     if (!lockFile.is_open()) {
         std::cerr << "Error while making lock file for " << tableName << std::endl;
