@@ -1,7 +1,7 @@
 #include "header.h"
 using namespace std;
 
-bool tableExists(const DatabaseManager& dbManager, const string& tableName) {
+bool tableExists(const DatabaseManager& dbManager, const string& tableName) { //проверяет, существует ли таблица с указанным именем в менеджере базы данных
     UniversalNode* current = dbManager.tables.head;
     while (current != nullptr) { // пройдемся по списку таблиц
         DBtable& currentTable = reinterpret_cast<DBtable&>(current->data);
@@ -13,7 +13,7 @@ bool tableExists(const DatabaseManager& dbManager, const string& tableName) {
     return false;
 }
 
-void splitPoint(LinkedList& tablesFromQuery, LinkedList& columnsFromQuery, string& wordFromQuery) {
+void splitPoint(LinkedList& tablesFromQuery, LinkedList& columnsFromQuery, string& wordFromQuery) { //разделения строки, содержащей имя таблицы и имя колонки, которые разделены символом точки
     size_t dotPos = wordFromQuery.find('.'); // найдем позицию точки
     if (dotPos != string::npos) {
         tablesFromQuery.addToTheHead(wordFromQuery.substr(0, dotPos)); // Сохраняем имя таблицы
@@ -51,7 +51,7 @@ bool findDot(string str){
     }
 }
 
-int amountOfCSV(const DatabaseManager& dbManager, const string& tableName) {
+int amountOfCSV(const DatabaseManager& dbManager, const string& tableName) { //подсчет количества CSV-файлов, связанных с заданной таблицей в базе данных
     int amount = 0; // ищем количество созданных csv файлов
     string tableDir;
     while (true) {
