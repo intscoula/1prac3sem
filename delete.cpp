@@ -2,7 +2,7 @@
 #include "functions.h"
 using namespace std;
 
-void deleteFunc(const DatabaseManager& dbManager, const std::string& tableName, string& query, LinkedList& tableFromQuery, LinkedList& columnFromQuery){
+void deleteFunc(const DatabaseManager& dbManager, const std::string& tableName, string& query, LinkedList& tableFromQuery, LinkedList& columnFromQuery){ //удаление записей из таблицы базы данных
     bool insideQuotes = false;
     string currentValue;
     LinkedList dataList; // тут будут находится все значения, которые захотим удалить
